@@ -105,12 +105,6 @@ export default function Home() {
       <div className={menu ? "menu" : "menu--hidden"}>
         <ul>
           <li onClick={() => setMenu(!menu)}><Link href="/"><a>Página Inicial</a></Link></li>
-          <li className="disabled">Filmes</li>
-          <ul className="subfields">
-            <li><Link href="/"><a>Populares</a></Link></li>
-            <li><Link href="/"><a>Tendência</a></Link></li>
-            <li><Link href="/"><a>Melhor avaliados</a></Link></li>
-          </ul>
           <li><Link href="/"><a>Meus Favoritos</a></Link></li>
           <li><Link href="/"><a>Pesquisar</a></Link></li>
         </ul>
