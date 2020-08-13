@@ -33,6 +33,10 @@ textarea {
   background: var(--color-dark);
 }
 
+h1 {
+  color: var(--color-dark);
+}
+
 header {
   align-items: center;
   background: var(--color-dark);

@@ -1,17 +1,13 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import {useState, useEffect} from 'react';
 
 import MovieService from '../services/movie.service';
 
 import FirstLoading from './components/Loading/FirstLoading';
 import Film from './components/Film';
-import Header from './components/Header/Desktop';
+import Header from './components/Header';
 
 export default function Home() {
-  const [menu, setMenu] = useState(false);
-  const [scroll, setScroll] = useState(0);
-
   const [searchText, setSearchText] = useState('');
   const [searchResult, setSearchResult] = useState({});
 
@@ -51,18 +47,7 @@ export default function Home() {
     }
   }
 
-  const search = async (query) => {
-    try {
-      const { results } = await MovieService.search(query);
-      setSearchResult(results);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
     getPopularMovie();
     getTrending();
     getTopRated();
@@ -76,16 +61,6 @@ export default function Home() {
     }
   }, [popular, trending, topRated]);
 
-  useEffect(() => {
-    searchText.length > 0 &&
-    search(searchText)
-  }, [searchText]);
-
-  const handleScroll = () => {
-    const position = window.pageYOffset;
-    setScroll(position);
-  }
-
   return (
     <div className="container">
       <Head>
@@ -94,21 +69,7 @@ export default function Home() {
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet"></link>
       </Head>
 
-      <header>
-        <img src="./logo.svg" alt="Cataloguei" />
-        <div className="header__menu--mobile">
-          <img src={menu ? "./assets/images/close.svg" : "./assets/images/menu.svg"} alt="Menu" onClick={() => setMenu(!menu)} />
-        </div>
-        <Header searchText={searchText} setSearchText={setSearchText} />
-      </header>
-
-      <div className={menu ? "menu" : "menu--hidden"}>
-        <ul>
-          <li onClick={() => setMenu(!menu)}><Link href="/"><a>Página Inicial</a></Link></li>
-          <li><Link href="/"><a>Meus Favoritos</a></Link></li>
-          <li><Link href="/"><a>Pesquisar</a></Link></li>
-        </ul>
-      </div>
+      <Header searchText={searchText} setSearchText={setSearchText} setSearchResult={setSearchResult} />
 
       { loading ? <FirstLoading /> :
         <div className="content">

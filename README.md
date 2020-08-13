@@ -3,7 +3,7 @@
 </p>
 
 ## Cataloguei
-Cataloguei é uma aplicação onde o usuário pode ver os filmes populares do momento, em tendência, os melhores avaliados, adicionar filmes aos seus favoritos e pesquisar informações e detalhes de um filme específico.
+<b>Cataloguei</b> é uma aplicação onde o usuário pode ver os filmes populares do momento, em tendência, os melhores avaliados, adicionar filmes aos seus favoritos e pesquisar informações e detalhes de um filme específico.
 
 #### Você pode encontrar o projeto no ar em:
 [https://cataloguei.vercel.app](https://cataloguei.vercel.app)

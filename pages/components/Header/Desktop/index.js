@@ -15,7 +15,7 @@ const Header = ({ searchText, setSearchText }) => {
 
   return (
     <ul className="header__menu--desktop">
-      <li className="active">Página Inicial</li>
+      <li className="active" onClick={() => setSearchText('')}>Página Inicial</li>
       <li>Meus Favoritos</li>
       <div className="search">
         {
@@ -28,7 +28,7 @@ const Header = ({ searchText, setSearchText }) => {
               value={searchText}
               onKeyDown={(e) => e.keyCode === 13 && handleSearch()}
             />
-            <img src="/assets/images/close.svg" alt="Close" onClick={() => setSearchBar(false)} />
+            <img src="/assets/images/close.svg" alt="Close" onClick={() => {setSearchBar(false); setSearchText('')}} />
           </> :
           <img src="/assets/images/search.svg" alt="Search" onClick={() => handleSearch()} />
         }
