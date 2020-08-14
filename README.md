@@ -1,6 +1,14 @@
 <p align="center">
   <img src="./public/assets/logo_light.svg" alt="Cataloguei" width="64">
 </p>
+<br />
+<p align="center">
+  <img src="https://img.shields.io/github/package-json/v/marcosvaz/cataloguei?style=for-the-badge" alt="GitHub package.json version" />
+  <img src="https://img.shields.io/github/last-commit/marcosvaz/cataloguei?style=for-the-badge" alt="GitHub last commit">
+  <img src="https://img.shields.io/github/deployments/marcosvaz/cataloguei/production?style=for-the-badge" alt="GitHub deployments">
+  <br />
+  <img src="https://img.shields.io/github/license/marcosvaz/cataloguei?style=for-the-badge" alt="License" />
+</p>
 
 ## Cataloguei
 <b>Cataloguei</b> é uma aplicação onde o usuário pode ver os filmes populares do momento, em tendência, os melhores avaliados, adicionar filmes aos seus favoritos e pesquisar informações e detalhes de um filme específico.
