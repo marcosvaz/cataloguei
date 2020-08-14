@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, {useState} from 'react';
 
 /** 
@@ -18,7 +19,8 @@ const Header = ({ searchText, setSearchText }) => {
 
   return (
     <ul className="header__menu--desktop">
-      <li className="active" onClick={() => setSearchText('')}>Página Inicial</li>
+
+      <li className="active" onClick={() => setSearchText('')}><Link href="/">Página Inicial</Link></li>
       <li>Meus Favoritos</li>
       <div className="search">
         {
