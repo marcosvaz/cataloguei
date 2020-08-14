@@ -6,6 +6,12 @@ import MovieService from '../../../services/movie.service';
 
 import HeaderDesktop from './Desktop';
 
+/**
+ * Header component
+ * @param searchText search text
+ * @param setSearchText setter of search text
+ * @param setSearchResult setter of search results
+ */
 const Header = ({searchText, setSearchText, setSearchResult}) => {
   const [menu, setMenu] = useState(false);
   const router = useRouter();

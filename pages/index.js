@@ -7,6 +7,9 @@ import FirstLoading from './components/Loading/FirstLoading';
 import Film from './components/Film';
 import Header from './components/Header';
 
+/**
+ * Home page
+ */
 export default function Home() {
   const [searchText, setSearchText] = useState('');
   const [searchResult, setSearchResult] = useState({});
@@ -66,7 +69,7 @@ export default function Home() {
       <Head>
         <link rel="icon" href="/logo.svg" />
         <title>Cataloguei</title>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet" />
       </Head>
 
       <Header searchText={searchText} setSearchText={setSearchText} setSearchResult={setSearchResult} />

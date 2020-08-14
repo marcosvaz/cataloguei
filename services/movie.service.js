@@ -87,6 +87,40 @@ class MovieService {
     });
   };
 
+  getGenres = async () => {
+    return new Promise((resolve, reject) => {
+      axios.get(`/genre/movie/list`, {
+        params: {
+          api_key: process.env.NEXT_PUBLIC_API_KEY,
+          language: 'pt-BR'
+        }
+      })
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  
+  getCredits = async (movie_id) => {
+    return new Promise((resolve, reject) => {
+      axios.get(`/movie/${movie_id}/credits`, {
+        params: {
+          api_key: process.env.NEXT_PUBLIC_API_KEY,
+          language: 'pt-BR'
+        }
+      })
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+
   getRecommendations = async (movie_id) => {
     return new Promise((resolve, reject) => {
       axios.get(`/movie/${movie_id}/recommendations`, {

@@ -1,7 +1,8 @@
 import React from 'react';
 
-// import * as S from './styles';
-
+/**
+ * Page of user favorites
+ */
 export default function Favorites() {
   return (
     <></>

@@ -1,7 +1,8 @@
 import React from 'react';
 
-// import * as S from './styles';
-
+/**
+ * First loading component
+ */
 const FirstLoading = () => {
     return (
         <div className="loading">

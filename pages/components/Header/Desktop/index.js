@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
 
-// import * as S from './styles';
-
+/** 
+ * Header Desktop component
+ * @param searchText search text
+ * @param setSearchText setter of search text
+*/
 const Header = ({ searchText, setSearchText }) => {
   const [searchBar, setSearchBar] = useState(false);
 

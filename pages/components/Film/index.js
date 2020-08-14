@@ -1,9 +1,15 @@
 import React, {useState} from 'react';
 
-// import * as S from './styles';
-
+/**
+ * Film component
+ * @param id film id
+ * @param title film title
+ * @param poster_path film poster path
+ */
 const Film = ({id, title, poster_path}) => {
     const [isFavorite, setFavorite] = useState(false);
+
+    console.log(id);
 
     return (
       <>
