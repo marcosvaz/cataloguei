@@ -20,7 +20,7 @@ const Header = ({ searchText, setSearchText }) => {
   return (
     <ul className="header__menu--desktop">
 
-      <li className="active" onClick={() => setSearchText('')}><Link href="/">Página Inicial</Link></li>
+      <li className="active" onClick={() => setSearchText('')}><Link href="/"><a>Página Inicial</a></Link></li>
       <li>Meus Favoritos</li>
       <div className="search">
         {
