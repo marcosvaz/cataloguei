@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./public/logo_light.svg" alt="Cataloguei" width="64">
+  <img src="./public/assets/logo_light.svg" alt="Cataloguei" width="64">
 </p>
 
 ## Cataloguei
