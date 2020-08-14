@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import React, {useState, useEffect} from 'react';
 import { useRouter} from 'next/router';
+import moment from 'moment';
 
 import MovieService from '../../services/movie.service';
 
@@ -84,6 +85,23 @@ export default function Info() {
     }
   }
 
+  const time = (minutes) => {
+    if(minutes){
+      let h = minutes / 60 | 0;
+      let m = minutes % 60 | 0;
+      let formated = moment.utc().hours(h).minutes(m).format('h:m');
+      let time = `${formated.replace(':', 'h ')}m`;
+      return time;
+    }
+  }
+
+  const releaseDate = (release_date) => {
+    if(release_date){
+      let release = release_date.split('-')[0];
+      return release;
+    }
+  }
+
   useEffect(() => {
     if(id) {
       getDetails();
@@ -110,15 +128,17 @@ export default function Info() {
             style={{ height: '100%', maxHeight: 'calc(100vh - 10rem)' }}
           />
           <div style={{ margin: '0 2rem' }}>
-            <h1 style={{ color: '#FFF', margin: '0', fontFamily: 'Montserrat', fontWeight: '400', fontSize: '3.2rem' }}>{film.title}</h1>
-            <div style={{ display: 'flex' }}>
-              <ul style={{ padding: '0', listStyle: 'none', display: 'flex',  }}>
-                <li style={{ marginRight: '1rem' }}>{film.runtime}</li>
-                •
-                <li style={{ margin: '0 1rem' }}>{film.release_date}</li>
-                •
-                <li style={{ marginLeft: '1rem' }}>{film.vote_average}/10</li>
-              </ul>
+            <div>
+              <h1 style={{ color: '#FFF', margin: '0', fontFamily: 'Montserrat', fontWeight: '400', fontSize: '3.2rem' }}>{film.title}</h1>
+              <div style={{ display: 'flex' }}>
+                <ul style={{ padding: '0', listStyle: 'none', display: 'flex',  }}>
+                  <li style={{ marginRight: '1rem' }}>{time(film.runtime)}</li>
+                  •
+                  <li style={{ margin: '0 1rem' }}>{releaseDate(film.release_date)}</li>
+                  •
+                  <li style={{ marginLeft: '1rem' }}>{film.vote_average}/10</li>
+                </ul>
+              </div>
             </div>
             <div>
               <span>Gêneros</span>
