@@ -40,7 +40,25 @@ npm install
 yarn
 ```
 
-Com esses comandos realizados, você deve conseguir rodar o projeto na sua máquina, utilizando o comando:
+Antes de rodar o projeto, você precisará criar um arquivo com variáveis de ambiente chamado ```.env.local```, seguindo o exemplo do arquivo ```.env.example```:
+```text
+NEXT_PUBLIC_API_URL=https://api.themoviedb.org/3
+NEXT_PUBLIC_API_KEY=
+```
+> A API utilizada no projeto é a da plataforma [TMDB](https://www.themoviedb.org/).
+>
+> Para solicitar a chave:
+> - Crie uma conta;
+> - Clique na sua foto e em ```Configurações```;
+> - Acesse a aba ```API```;
+> - Copie o campo ```Chave da API (v3 auth)``` e cole em frente ao ```NEXT_PUBLIC_API_KEY``` no seu arquivo ```.env.local```, assim ele se parecerá com o seguinte:
+```text
+NEXT_PUBLIC_API_URL=https://api.themoviedb.org/3
+NEXT_PUBLIC_API_KEY=a78125r98a00dbjqw1217652q283t01j
+```
+> <b>IMPORTANTE:</b> A KEY utilizada no exemplo é fictícia, provavelmente não irá funcionar para realizar as requisições da API.
+
+Com tudo configurado, você deve conseguir rodar o projeto na sua máquina, utilizando o comando:
 
 ```bash
 npm run dev
