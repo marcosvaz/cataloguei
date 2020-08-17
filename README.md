@@ -70,24 +70,5 @@ Após realizar o comando, acesse [http://localhost:3000](http://localhost:3000) 
 ---
 <br />
 
-### Testes
-Para rodar os testes (Jest & Enzyme), utilize o seguinte comando:
-```bash
-npm run test
-# ou
-yarn test
-```
-> Para a opção de ```coverage```, pode-se utilizar os seguintes comandos:
-```bash
-npm run coverage
-# ou
-yarn coverage
-```
-
----
-> <b>Obs:</b> Infelizmente, para realizar deploy do projeto, não é possível que tenha os arquivos de teste. Para baixar o projeto sem esses arquivos, é só acessar a branch ```prod``` do projeto no repositório.
-
-<br />
-
 ### Licença
 Acesse o arquivo da licença em [LICENSE.md](./LICENSE.md) para mais informações.
