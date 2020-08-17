@@ -32,8 +32,14 @@ const Header = ({searchText, setSearchText, setSearchResult}) => {
   }, [searchText]);
 
   const sendToHome = () => {
+    setSearchText('');
     setMenu(!menu);
     router.push('/');
+  }
+
+  const handleMenu = () => {
+    setMenu(!menu);
+    !menu && setSearchText('');
   }
 
   return (
@@ -43,7 +49,7 @@ const Header = ({searchText, setSearchText, setSearchResult}) => {
           <a><img src="/assets/logo.svg" alt="Cataloguei" /></a>
         </Link>
         <div className="header__menu--mobile">
-          <img src={menu ? "/assets/images/close.svg" : "/assets/images/menu.svg"} alt="Menu" onClick={() => setMenu(!menu)} />
+          <img src={menu ? "/assets/images/close.svg" : "/assets/images/menu.svg"} alt="Menu" onClick={() => handleMenu()} />
         </div>
         <HeaderDesktop searchText={searchText} setSearchText={setSearchText} />
       </header>

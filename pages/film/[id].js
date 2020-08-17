@@ -7,6 +7,7 @@ import MovieService from '../../services/movie.service';
 import Header from '../components/Header';
 import Film from '../components/Film';
 import Button from '../components/Button';
+import NoData from '../components/NoData';
 
 import { castNames, directorName, movieGenres, releaseDate, time, handleLike, validateLike } from '../../config/functions';
 
@@ -84,16 +85,21 @@ export default function Info() {
       </Head>
       <Header searchText={searchText} setSearchText={setSearchText} setSearchResult={setSearchResult} />
       {
-        (searchText.length > 0 && searchResult.length > 0) ?
+        (searchText.length > 0) ?
         <div className="films--search">
           <h3>Você está buscando por: “{searchText}”</h3>
-          <div className="films--search__posters">
-            {
-              searchResult.map(film => (
-                <Film key={id} id={id} title={film.title} poster_path={film.poster_path} setSearchText={setSearchText} />
-              ))
-            }
-          </div>
+          {
+            searchResult.length > 0 ?
+            <div className="films--search__posters">
+              {
+                searchResult.map(film => (
+                  <Film key={film.id} id={film.id} title={film.title} poster_path={film.poster_path} setSearchText={setSearchText} />
+                ))
+              }
+            </div> 
+            :
+            <NoData />
+          }
         </div> :
         (film && credits && genres && recommended) &&
         <>
