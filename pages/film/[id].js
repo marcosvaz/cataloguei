@@ -7,6 +7,7 @@ import MovieService from '../../services/movie.service';
 
 import Header from '../components/Header';
 import Film from '../components/Film';
+import Button from '../components/Button';
 
 /**
  * Page of film details
@@ -14,6 +15,9 @@ import Film from '../components/Film';
 export default function Info() {
   const router = useRouter();
   const {id} = router.query;
+
+  const [like, setLike] = useState(false);
+  const [favorites, setFavorites] = useState([]);
 
   const [searchText, setSearchText] = useState('');
   const [searchResult, setSearchResult] = useState({});
@@ -23,7 +27,6 @@ export default function Info() {
   const [genres, setGenres] = useState([]);
 
   const [recommended, setRecommended] = useState({});
-
 
   const getDetails = async () => {
     try {
@@ -55,7 +58,6 @@ export default function Info() {
   const getRecommendations = async () => {
     try {
       const { results } = await MovieService.getRecommendations(id);
-      console.log(results);
       setRecommended(results);
     } catch (error) {
       console.log(error);
@@ -72,7 +74,10 @@ export default function Info() {
 
   const directorName = (crew) => {
     if(crew){
-      let name = `${crew.find(person => person.job === 'Director').name}`;
+      let name = `${crew.find(person => person.job === 'Director')?.name}`;
+      if(name === "undefined"){
+        return null;
+      }
       return name;
     }
   }
@@ -102,59 +107,112 @@ export default function Info() {
     }
   }
 
+  const handleLike = () => {
+    if (!like) {
+      setLike(true);
+
+      if (localStorage.getItem('favorites')) {
+        localStorage.setItem('favorites', `${localStorage.getItem('favorites')}${id},`);
+      } else {
+        localStorage.setItem('favorites', `${id},`);
+      }
+
+    } else {
+      setLike(false);
+
+      if (localStorage.getItem('favorites').replace(/,$/, '').split(',').length > 1) {
+        localStorage.setItem('favorites', localStorage.getItem('favorites').replace(`${id},`, ''));
+      } else {
+        localStorage.removeItem('favorites');
+      }
+    }
+  }
+
   useEffect(() => {
     if(id) {
       getDetails();
       getCredits();
       getGenres();
       getRecommendations();
+
+      if (localStorage.getItem('favorites')) {
+        if (localStorage.getItem('favorites').replace(/,$/, '').split(',').includes(id.toString())){
+          setLike(true);
+        } else {
+          setLike(false);
+        }
+
+        setFavorites(localStorage.getItem('favorites').replace(/,$/, '').split(','));
+      } else {
+        setLike(false)
+      }
     }
   }, [id])
 
   return (
-    <div style={{ paddingTop: '10rem', background: 'var(--color-dark)' }}>
+    <div className="container details" style={{ paddingTop: '10rem' }}>
       <Head>
         <link rel="icon" href="/logo.svg" />
         <title>Cataloguei | {film.title}</title>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet" />
       </Head>
-      <Header searchText={searchText} setSearchText={setSearchText} />
+      <Header searchText={searchText} setSearchText={setSearchText} setSearchResult={setSearchResult} />
       {
-        (film && credits && genres) &&
+        (searchText.length > 0 && searchResult.length > 0) ?
+        <div className="films--search">
+          <h3>Você está buscando por: “{searchText}”</h3>
+          <div className="films--search__posters">
+            {
+              searchResult.map(film => (
+                <Film key={id} id={id} title={film.title} poster_path={film.poster_path} setSearchText={setSearchText} />
+              ))
+            }
+          </div>
+        </div> :
+        (film && credits && genres && recommended) &&
         <>
-          <img
-            src={`https://image.tmdb.org/t/p/original/${film.poster_path}`}
-            alt={film.title}
-            style={{ height: '100%', maxHeight: 'calc(100vh - 10rem)' }}
-          />
-          <div style={{ margin: '0 2rem' }}>
-            <div>
-              <h1 style={{ color: '#FFF', margin: '0', fontFamily: 'Montserrat', fontWeight: '400', fontSize: '3.2rem' }}>{film.title}</h1>
-              <div style={{ display: 'flex' }}>
-                <ul style={{ padding: '0', listStyle: 'none', display: 'flex',  }}>
-                  <li style={{ marginRight: '1rem' }}>{time(film.runtime)}</li>
-                  •
-                  <li style={{ margin: '0 1rem' }}>{releaseDate(film.release_date)}</li>
-                  •
-                  <li style={{ marginLeft: '1rem' }}>{film.vote_average}/10</li>
-                </ul>
+          <div className="main">
+            <div className="film__spotlight">  
+              <img
+                src={`https://image.tmdb.org/t/p/original/${film.poster_path}`}
+                alt={film.title}
+              />
+              <div className="spotlight__bottom">
+                { 
+                  like &&
+                  <img src={`/assets/images/favorite.svg`} alt="Adicionar aos favoritos" />
+                }
               </div>
             </div>
-            <div>
-              <span>Gêneros</span>
-              <p>{movieGenres(film.genres)}</p>
-            </div>
-            <div>
-              <span>Sinopse</span>
-              <p>{film.overview}</p>
-            </div>
-            <div>
-              <span>Elenco</span>
-              <p>{castNames(credits.cast)}</p>
-            </div>
-            <div>
-              <span>Direção</span>
-              <p>{directorName(credits.crew)}</p>
+            <div className="film__details">
+              <div className="film__details--numbers">
+                <h1>{film.title}</h1>
+                <div className="details__numbers">
+                  <ul>
+                    <li>{time(film.runtime) || 'Duração não encontrada'}</li>
+                    •
+                    <li>{releaseDate(film.release_date) || 'Data de lançamento não encontrada'}</li>
+                    •
+                    <li>{film.vote_average || '?'}/10</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="details__info">
+                <span>Gêneros</span>
+                <p>{movieGenres(film.genres) || 'Sem informações'}</p>
+              </div>
+              <div className="details__info">
+                <span>Sinopse</span>
+                <p>{film.overview || 'Sem informações'}</p>
+              </div>
+              <div className="details__info">
+                <span>Elenco</span>
+                <p>{castNames(credits.cast) || 'Sem informações'}</p>
+              </div>
+              <div className="details__info">
+                <span>Direção</span>
+                <p>{directorName(credits.crew) || 'Sem informações'}</p>
+              </div>
             </div>
           </div>
           {
@@ -164,12 +222,20 @@ export default function Info() {
               <div className="films--recommended__posters">
                 {
                   recommended.map(film => (
-                    <Film key={film.id} id={film.id} title={film.title} poster_path={film.poster_path} />
+                    <Film key={film.id} id={film.id} title={film.title} poster_path={film.poster_path} setSearchText={setSearchText} />
                   ))
                 }
               </div>
             </div>
           }
+          <div className="button--float">
+            <Button 
+              outline={like} 
+              onClick={() => handleLike()}>
+                {`${like ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}`}
+                <img src={`/assets/images/favorite${!like ? '_dark' : '' }.svg`} />
+            </Button>
+          </div>
         </>
       }
     </div>

@@ -1,0 +1,27 @@
+/*
+* Modules
+*/
+@import './modules/normalize';
+@import './modules/grid';
+
+/*
+* Theme
+*/
+@import './theme/colors';
+@import './theme/scrollbar';
+
+/*
+* Global styles
+*/
+@import './globals';
+
+/*
+* Components
+*/
+@import './components/header/styles';
+@import './components/loading/styles';
+@import './components/film/styles';
+@import './components/button/styles';
+@import './components/favorites/styles';
+@import './components/noData/styles';
+@import './components/notFound/styles';

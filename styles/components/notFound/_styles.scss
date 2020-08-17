@@ -1,0 +1,23 @@
+.not_found {
+  align-items: center;
+  display: flex;
+  height: calc(100vh - 10rem);
+  flex-direction: column;
+  justify-content: center;
+}
+
+.not_found img {
+  margin-bottom: 2rem;
+}
+
+.not_found span {
+  opacity: 0.6;
+  text-align: center;
+  width: 33.5rem;
+}
+
+.not_found .button {
+  bottom: 5rem;
+  position: absolute;
+  z-index: 1;
+}

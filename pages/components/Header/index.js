@@ -14,6 +14,7 @@ import HeaderDesktop from './Desktop';
  */
 const Header = ({searchText, setSearchText, setSearchResult}) => {
   const [menu, setMenu] = useState(false);
+  const [search, setSearch] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -38,7 +39,9 @@ const Header = ({searchText, setSearchText, setSearchResult}) => {
   return (
     <>
       <header>
-        <img src="/assets/logo.svg" alt="Cataloguei" />
+        <Link href="/">
+          <a><img src="/assets/logo.svg" alt="Cataloguei" /></a>
+        </Link>
         <div className="header__menu--mobile">
           <img src={menu ? "/assets/images/close.svg" : "/assets/images/menu.svg"} alt="Menu" onClick={() => setMenu(!menu)} />
         </div>
@@ -47,9 +50,21 @@ const Header = ({searchText, setSearchText, setSearchResult}) => {
 
       <div className={menu ? "menu" : "menu--hidden"}>
         <ul>
-          <li onClick={() => sendToHome()}><Link href="/"><a>Página Inicial</a></Link></li>
-          <li><Link href="/favorites"><a>Meus Favoritos</a></Link></li>
-          <li><Link href="/"><a>Pesquisar</a></Link></li>
+          <li onClick={() => sendToHome()}><Link href="/" passHref><a>Página Inicial</a></Link></li>
+          <li onClick={() => setSearch(!search)}>Pesquisar</li>
+          {
+            search &&
+            <li>
+              <input
+                className="search__input"
+                type="text"
+                placeholder="Digite aqui sua busca"
+                onChange={(e) => setSearchText(e.target.value)}
+                value={searchText}
+                onKeyDown={(e) => e.keyCode === 13 && setMenu(!menu)}
+              />
+            </li>
+          }
         </ul>
       </div>
     </>

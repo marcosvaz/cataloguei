@@ -1,0 +1,15 @@
+.loading {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.loading img {
+  margin-bottom: 2rem;
+}
+
+.loading span {
+  opacity: 0.6;
+}

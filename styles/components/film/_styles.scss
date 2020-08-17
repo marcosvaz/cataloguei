@@ -1,0 +1,87 @@
+div[class^="films--"] h2 {
+  font-weight: 400;
+  font-size: 2.4rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+div[class$="__posters"]  {
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+div[class$="__posters"]::-webkit-scrollbar { 
+  display: none; 
+}
+
+div[class$="__posters"] .film {
+  padding-right: 2rem;
+  position: relative;
+}
+
+div[class$="__posters"] .film .film__poster {
+  border-radius: 0.5rem;
+  cursor: pointer;
+  height: 22rem;
+  width: 15rem;
+}
+
+div[class$="__posters"] .film .film__like {
+  cursor: pointer;
+}
+
+div[class$="__posters"] .film .film__like .film__bottom {
+  align-items: center;
+  background: rgba(0,0,0,0.6);
+  border-radius: 0 0 0.5rem 0.5rem;
+  bottom: 0.4rem;
+  display: flex;
+  opacity: 0;
+  padding: 1rem 2rem;
+  position: absolute;
+  transition: opacity ease-in-out 0.2s;
+  user-select: none;
+  width: 15rem;
+}
+
+div[class$="__posters"] .film:hover > .film__like .film__bottom {
+  opacity: 1;
+}
+
+div[class$="__posters"] .film .film__favorite {
+  position: absolute;
+  bottom: 1rem;
+  z-index: 1;
+  right: 3rem;
+}
+
+div[class$="__posters"] .film .film__favorite:not(.active) {
+  opacity: 0;
+  transition: opacity ease-in-out 0.2s;
+}
+
+div[class$="__posters"] .film:hover .film__favorite:not(.active) {
+  opacity: 1;
+}
+
+div.films {
+  min-height: calc(100vh - 16rem);
+}
+
+div[class^="films--search"] h3 {
+  font-size: 2.4rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+div[class$="search__posters"] {
+  flex-wrap: wrap;
+}
+
+div[class$="search__posters"] .film {
+  margin:  1rem 0 2rem 0;
+}
+
+@import './film-details';

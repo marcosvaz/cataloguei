@@ -1,5 +1,5 @@
+import React, {useState, useEffect} from 'react';
 import Link from 'next/link';
-import React, {useState} from 'react';
 
 /**
  * Film component
@@ -7,32 +7,63 @@ import React, {useState} from 'react';
  * @param title film title
  * @param poster_path film poster path
  */
-const Film = ({id, title, poster_path}) => {
-    const [isFavorite, setFavorite] = useState(false);
+const Film = ({id, title, poster_path, setSearchText}) => {
+  const [favorites, setFavorites] = useState([]);
+  const [like, setLike] = useState(false);
 
-    console.log(id);
+  const handleLike = () => {
+    if(!like){
+      setLike(true);
+
+      if(localStorage.getItem('favorites')){
+        localStorage.setItem('favorites', `${localStorage.getItem('favorites')}${id},`);
+      } else {
+        localStorage.setItem('favorites', `${id},`);
+      }
+
+    } else {
+      setLike(false);
+      
+      if(localStorage.getItem('favorites').replace(/,$/, '').split(',').length > 1){
+        localStorage.setItem('favorites', localStorage.getItem('favorites').replace(`${id},`, ''));
+      } else {
+        localStorage.removeItem('favorites');
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (localStorage.getItem('favorites')){
+      localStorage.getItem('favorites').replace(/,$/, '').split(',').includes(id.toString()) &&
+      setLike(true);
+
+      setFavorites(localStorage.getItem('favorites').replace(/,$/, '').split(','));
+    } else {
+      setLike(false)
+    }
+  }, [id])
 
     return (
       <>
         {
           poster_path ?
-          <Link href="/film/[id]" as={`/film/${id}`}>
-            <a>
-              <div className="film">
+          <div className="film">
+            <Link href="/film/[id]" as={`/film/${id}`}>
+              <a onClick={() => setSearchText('')}>
                 <img className="film__poster" src={`https://image.tmdb.org/t/p/original/${poster_path}`} alt={title} />
-                <div className="film__like" onClick={() => setFavorite(!isFavorite)}>
-                  <div className="film__bottom">
-                    <span>
-                      {
-                        !isFavorite ? 'Adicionar' : 'Remover'
-                      }
-                    </span>
-                  </div>
-                  <img className={`film__favorite ${isFavorite ? 'active' : ''}`} src={`/assets/images/favorite${!isFavorite ? '_disabled' : ''}.svg`} alt="Adicionar aos favoritos" />
-                </div>
+              </a>
+            </Link>
+            <div className="film__like" onClick={() => handleLike()}>
+              <div className="film__bottom">
+                <span>
+                  {
+                    !like ? 'Adicionar' : 'Remover'
+                  }
+                </span>
               </div>
-            </a>
-          </Link>: null
+              <img className={`film__favorite ${like ? 'active' : ''}`} src={`/assets/images/favorite${!like ? '_disabled' : ''}.svg`} alt="Adicionar aos favoritos" />
+            </div>
+          </div>: null
         }
       </>
     );

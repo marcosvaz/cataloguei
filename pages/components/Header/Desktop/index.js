@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 /** 
  * Header Desktop component
@@ -20,13 +20,13 @@ const Header = ({ searchText, setSearchText }) => {
   return (
     <ul className="header__menu--desktop">
 
-      <li className="active" onClick={() => setSearchText('')}><Link href="/"><a>Página Inicial</a></Link></li>
-      <li>Meus Favoritos</li>
+      <li className="active" onClick={() => setSearchText('')}><Link href="/" passHref><a>Página Inicial</a></Link></li>
       <div className="search">
         {
           searchBar ?
           <>
             <input
+              className="search__input"
               type="text"
               placeholder="Digite aqui sua busca"
               onChange={(e) => setSearchText(e.target.value)}

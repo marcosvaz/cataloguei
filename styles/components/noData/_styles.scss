@@ -1,0 +1,17 @@
+.no_data {
+  align-items: center;
+  display: flex;
+  height: calc(100vh - 20rem);
+  flex-direction: column;
+  justify-content: center;
+}
+
+.no_data img {
+  margin-bottom: 2rem;
+}
+
+.no_data span {
+  opacity: 0.6;
+  text-align: center;
+  width: 33.5rem;
+}
