@@ -26,14 +26,12 @@
 - [GIT](https://git-scm.com/downloads) (se for utilizar o comandos do git)
 
 #### Instruções:
-Para instalar o projeto na sua máquina, baixe, ou clone esse repositório através do botão ```Code``` e ```Download ZIP``` ou utilize o seguinte comando no terminal:
-
+Para instalar o projeto na sua máquina através do Github, baixe, ou clone esse repositório através do botão ```Code``` e ```Download ZIP``` em [Github](https://github.com/marcosvaz/cataloguei) ou utilize o seguinte comando no terminal:
 ```bash
 git clone https://github.com/marcosvaz/cataloguei.git && cd cataloguei
 ```
 
-Após o término, instale as depêndencias utilizando:
-
+Caso já tenha os arquivos, ou após terminar de baixar, instale as depêndencias utilizando:
 ```bash
 npm install
 # ou
@@ -70,6 +68,25 @@ yarn dev
 Após realizar o comando, acesse [http://localhost:3000](http://localhost:3000) em um navegador de sua preferência.
 
 ---
+<br />
+
+### Testes
+Para rodar os testes (Jest & Enzyme), utilize o seguinte comando:
+```bash
+npm run test
+# ou
+yarn test
+```
+> Para a opção de ```coverage```, pode-se utilizar os seguintes comandos:
+```bash
+npm run coverage
+# ou
+yarn coverage
+```
+
+---
+> <b>Obs:</b> Infelizmente, para realizar deploy do projeto, não é possível que tenha os arquivos de teste. Para baixar o projeto sem esses arquivos, é só acessar a branch ```prod``` do projeto no repositório.
+
 <br />
 
 ### Licença
