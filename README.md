@@ -72,5 +72,22 @@ Após realizar o comando, acesse [http://localhost:3000](http://localhost:3000) 
 ---
 <br />
 
+### Testes
+Para rodar os testes (Jest & Enzyme), utilize o seguinte comando:
+```bash
+npm run test
+# ou
+yarn test
+```
+> Para a opção de ```coverage```, pode-se utilizar os seguintes comandos:
+```bash
+npm run coverage
+# ou
+yarn coverage
+```
+
+---
+<br />
+
 ### Licença
 Acesse o arquivo da licença em [LICENSE.md](./LICENSE.md) para mais informações.
