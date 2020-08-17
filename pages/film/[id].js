@@ -1,13 +1,15 @@
 import Head from 'next/head';
 import React, {useState, useEffect} from 'react';
 import { useRouter} from 'next/router';
-import moment from 'moment';
 
 import MovieService from '../../services/movie.service';
 
 import Header from '../components/Header';
 import Film from '../components/Film';
 import Button from '../components/Button';
+import NoData from '../components/NoData';
+
+import { castNames, directorName, movieGenres, releaseDate, time, handleLike, validateLike } from '../../config/functions';
 
 /**
  * Page of film details
@@ -17,7 +19,6 @@ export default function Info() {
   const {id} = router.query;
 
   const [like, setLike] = useState(false);
-  const [favorites, setFavorites] = useState([]);
 
   const [searchText, setSearchText] = useState('');
   const [searchResult, setSearchResult] = useState({});
@@ -64,70 +65,6 @@ export default function Info() {
     }
   }
 
-  const castNames = (cast) => {
-    if(cast){
-      let names = `${cast.map(person => (`${person.name}`))}`;
-      let manipulatedNames = names.replace(/,/g, ', ');
-      return manipulatedNames;
-    }
-  }
-
-  const directorName = (crew) => {
-    if(crew){
-      let name = `${crew.find(person => person.job === 'Director')?.name}`;
-      if(name === "undefined"){
-        return null;
-      }
-      return name;
-    }
-  }
-
-  const movieGenres = (movieGenres) => {
-    if(movieGenres){
-      let names = `${movieGenres.map(genre => (`${genre.name}`))}`;
-      let manipulatedNames = names.replace(/,/g, ', ');
-      return manipulatedNames;
-    }
-  }
-
-  const time = (minutes) => {
-    if(minutes){
-      let h = minutes / 60 | 0;
-      let m = minutes % 60 | 0;
-      let formated = moment.utc().hours(h).minutes(m).format('h:m');
-      let time = `${formated.replace(':', 'h ')}m`;
-      return time;
-    }
-  }
-
-  const releaseDate = (release_date) => {
-    if(release_date){
-      let release = release_date.split('-')[0];
-      return release;
-    }
-  }
-
-  const handleLike = () => {
-    if (!like) {
-      setLike(true);
-
-      if (localStorage.getItem('favorites')) {
-        localStorage.setItem('favorites', `${localStorage.getItem('favorites')}${id},`);
-      } else {
-        localStorage.setItem('favorites', `${id},`);
-      }
-
-    } else {
-      setLike(false);
-
-      if (localStorage.getItem('favorites').replace(/,$/, '').split(',').length > 1) {
-        localStorage.setItem('favorites', localStorage.getItem('favorites').replace(`${id},`, ''));
-      } else {
-        localStorage.removeItem('favorites');
-      }
-    }
-  }
-
   useEffect(() => {
     if(id) {
       getDetails();
@@ -135,17 +72,7 @@ export default function Info() {
       getGenres();
       getRecommendations();
 
-      if (localStorage.getItem('favorites')) {
-        if (localStorage.getItem('favorites').replace(/,$/, '').split(',').includes(id.toString())){
-          setLike(true);
-        } else {
-          setLike(false);
-        }
-
-        setFavorites(localStorage.getItem('favorites').replace(/,$/, '').split(','));
-      } else {
-        setLike(false)
-      }
+      validateLike(id, setLike);
     }
   }, [id])
 
@@ -158,16 +85,21 @@ export default function Info() {
       </Head>
       <Header searchText={searchText} setSearchText={setSearchText} setSearchResult={setSearchResult} />
       {
-        (searchText.length > 0 && searchResult.length > 0) ?
+        (searchText.length > 0) ?
         <div className="films--search">
           <h3>Você está buscando por: “{searchText}”</h3>
-          <div className="films--search__posters">
-            {
-              searchResult.map(film => (
-                <Film key={id} id={id} title={film.title} poster_path={film.poster_path} setSearchText={setSearchText} />
-              ))
-            }
-          </div>
+          {
+            searchResult.length > 0 ?
+            <div className="films--search__posters">
+              {
+                searchResult.map(film => (
+                  <Film key={film.id} id={film.id} title={film.title} poster_path={film.poster_path} setSearchText={setSearchText} />
+                ))
+              }
+            </div> 
+            :
+            <NoData />
+          }
         </div> :
         (film && credits && genres && recommended) &&
         <>
@@ -231,7 +163,7 @@ export default function Info() {
           <div className="button--float">
             <Button 
               outline={like} 
-              onClick={() => handleLike()}>
+              onClick={() => handleLike(like, id, setLike)}>
                 {`${like ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}`}
                 <img src={`/assets/images/favorite${!like ? '_dark' : '' }.svg`} />
             </Button>
