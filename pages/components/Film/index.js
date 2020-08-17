@@ -43,30 +43,30 @@ const Film = ({id, title, poster_path, setSearchText}) => {
     }
   }, [id])
 
-    return (
-      <>
-        {
-          poster_path ?
-          <div className="film">
-            <Link href="/film/[id]" as={`/film/${id}`}>
-              <a onClick={() => setSearchText('')}>
-                <img className="film__poster" src={`https://image.tmdb.org/t/p/original/${poster_path}`} alt={title} />
-              </a>
-            </Link>
-            <div className="film__like" onClick={() => handleLike()}>
-              <div className="film__bottom">
-                <span>
-                  {
-                    !like ? 'Adicionar' : 'Remover'
-                  }
-                </span>
-              </div>
-              <img className={`film__favorite ${like ? 'active' : ''}`} src={`/assets/images/favorite${!like ? '_disabled' : ''}.svg`} alt="Adicionar aos favoritos" />
+  return (
+    <>
+      {
+        poster_path ?
+        <div className="film">
+          <Link href="/film/[id]" as={`/film/${id}`}>
+            <a onClick={() => setSearchText('')}>
+              <img className="film__poster" src={`https://image.tmdb.org/t/p/original/${poster_path}`} alt={title} />
+            </a>
+          </Link>
+          <div className="film__like" onClick={() => handleLike()}>
+            <div className="film__bottom">
+              <span>
+                {
+                  !like ? 'Adicionar' : 'Remover'
+                }
+              </span>
             </div>
-          </div>: null
-        }
-      </>
-    );
+            <img className={`film__favorite ${like ? 'active' : ''}`} src={`/assets/images/favorite${!like ? '_disabled' : ''}.svg`} alt={!like ? 'Adicionar aos favoritos' : 'Remover dos favoritos'} />
+          </div>
+        </div>: null
+      }
+    </>
+  );
 }
 
 export default Film;
